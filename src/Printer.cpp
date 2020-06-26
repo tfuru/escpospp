@@ -21,8 +21,13 @@ Printer::Printer(std::pair<int, int> ids): context(nullptr), printer(nullptr), i
         std::cout << "Init Error " << r << std::endl; //there was an error
         throw -1;
     }
-    //libusb_set_debug(context, 3); //set verbosity level to 3, as suggested in the documentation
-    libusb_set_option(context, LIBUSB_OPTION_LOG_LEVEL, 3);
+
+#if LIBUSB_API_VERSION >= 0x01000106
+    libusb_set_option(ctx, LIBUSB_OPTION_LOG_LEVEL, 3);
+#else
+     //set verbosity level to 3, as suggested in the documentation
+     libusb_set_debug(ctx, 3); 
+#endif
 
     libusb_device **list = NULL;
     int count = libusb_get_device_list(context, &list);
