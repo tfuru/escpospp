@@ -23,10 +23,10 @@ Printer::Printer(std::pair<int, int> ids): context(nullptr), printer(nullptr), i
     }
 
 #if LIBUSB_API_VERSION >= 0x01000106
-    libusb_set_option(ctx, LIBUSB_OPTION_LOG_LEVEL, 3);
+    libusb_set_option(context, LIBUSB_OPTION_LOG_LEVEL, 3);
 #else
      //set verbosity level to 3, as suggested in the documentation
-     libusb_set_debug(ctx, 3); 
+     libusb_set_debug(context, 3); 
 #endif
 
     libusb_device **list = NULL;
